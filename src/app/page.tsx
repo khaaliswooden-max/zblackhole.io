@@ -55,6 +55,13 @@ const platforms = [
     color: '#ec4899',
     icon: '⬢',
   },
+  {
+    name: 'Relian',
+    tagline: 'AI Trust Infrastructure',
+    description: 'Enterprise-grade AI reliability, governance, and trust verification for mission-critical deployments.',
+    color: '#eab308',
+    icon: '◆',
+  },
 ];
 
 const containerVariants = {
