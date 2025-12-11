@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@200;300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --color-void: #000000;
+  --color-singularity: #0a0a0f;
+  --color-accretion: #3b82f6;
+  --color-plasma: #f97316;
+  --color-gravitational: #a855f7;
+  --color-hawking: #06b6d4;
+  --color-horizon: #1e1e2e;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background: var(--color-void);
+  color: white;
+  font-family: var(--font-body);
+}
+
+body {
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-singularity);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-horizon);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accretion);
+}
+
+/* Selection */
+::selection {
+  background: var(--color-accretion);
+  color: white;
+}
+
+/* Glow utilities */
+@layer utilities {
+  .glow-accretion {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5),
+                0 0 40px rgba(59, 130, 246, 0.3),
+                0 0 60px rgba(59, 130, 246, 0.1);
+  }
+  
+  .glow-plasma {
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.5),
+                0 0 40px rgba(249, 115, 22, 0.3),
+                0 0 60px rgba(249, 115, 22, 0.1);
+  }
+  
+  .glow-gravitational {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.5),
+                0 0 40px rgba(168, 85, 247, 0.3),
+                0 0 60px rgba(168, 85, 247, 0.1);
+  }
+  
+  .glow-hawking {
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.5),
+                0 0 40px rgba(6, 182, 212, 0.3),
+                0 0 60px rgba(6, 182, 212, 0.1);
+  }
+  
+  .text-glow {
+    text-shadow: 0 0 10px currentColor,
+                 0 0 20px currentColor,
+                 0 0 40px currentColor;
+  }
+  
+  .backdrop-blur-cosmic {
+    backdrop-filter: blur(12px) saturate(180%);
+  }
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-accretion), var(--color-gravitational), var(--color-hawking));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Noise overlay */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.03;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Grid background */
+.grid-bg {
+  background-image: 
+    linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Platform card styles */
+.platform-card {
+  @apply relative overflow-hidden rounded-2xl border border-white/10 bg-zuup-singularity/80 backdrop-blur-cosmic;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.platform-card:hover {
+  @apply border-zuup-accretion/50;
+  transform: translateY(-4px) scale(1.02);
+}
+
+.platform-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.platform-card:hover::before {
+  opacity: 1;
+}
