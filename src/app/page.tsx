@@ -271,9 +271,9 @@ export default function Home() {
               OUR MISSION
             </span>
             <blockquote className="text-3xl sm:text-4xl md:text-5xl font-display font-light text-white/90 leading-tight mb-8">
-              "To engineer solutions that don't just solve problems—they 
+              &ldquo;To engineer solutions that don&apos;t just solve problems—they 
               <span className="gradient-text font-medium"> redefine the problem space </span>
-              entirely."
+              entirely.&rdquo;
             </blockquote>
             <p className="text-white/50 text-lg">
               — Zuup Innovation Lab
@@ -302,7 +302,7 @@ export default function Home() {
               </h2>
               <p className="text-lg text-white/60 max-w-xl mx-auto mb-10">
                 We partner with organizations, researchers, and governments pushing the boundaries 
-                of what's possible.
+                of what&apos;s possible.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a
