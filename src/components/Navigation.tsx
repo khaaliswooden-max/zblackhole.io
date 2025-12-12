@@ -8,6 +8,7 @@ const platforms = [
   { name: 'Aureon', description: 'Procurement Substrate', color: '#3b82f6' },
   { name: 'Veyra', description: 'Autonomy OS', color: '#f97316' },
   { name: 'Civium', description: 'Compliance Engine', color: '#a855f7' },
+  { name: 'Relian', description: 'AI Trust Infrastructure', color: '#eab308' },
   { name: 'PodX', description: 'Mobile Data Centers', color: '#06b6d4' },
   { name: 'Symbion', description: 'Gut-Brain Interface', color: '#22c55e' },
   { name: 'QAWM', description: 'Quantum Archaeology', color: '#ec4899' },
