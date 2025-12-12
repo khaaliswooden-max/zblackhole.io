@@ -104,6 +104,9 @@ export default function Navigation() {
               <Link href="/research" className="text-white/70 hover:text-white transition-colors font-medium">
                 Research
               </Link>
+              <Link href="/whitepapers" className="text-white/70 hover:text-white transition-colors font-medium">
+                Whitepapers
+              </Link>
               <Link href="/about" className="text-white/70 hover:text-white transition-colors font-medium">
                 About
               </Link>
@@ -183,6 +186,13 @@ export default function Navigation() {
                     className="block p-3 text-lg text-white/70 hover:text-white transition-colors"
                   >
                     Research
+                  </Link>
+                  <Link
+                    href="/whitepapers"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block p-3 text-lg text-white/70 hover:text-white transition-colors"
+                  >
+                    Whitepapers
                   </Link>
                   <Link
                     href="/about"
