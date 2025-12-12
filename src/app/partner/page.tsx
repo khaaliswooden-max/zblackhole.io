@@ -147,7 +147,7 @@ export default function PartnerPage() {
             </h1>
             <p className="text-lg sm:text-xl text-white/60 max-w-3xl mx-auto">
               We partner with visionary organizations to deploy breakthrough solutions in AI trust, 
-              blockchain infrastructure, and autonomous systems. Let's create something extraordinary together.
+              blockchain infrastructure, and autonomous systems. Let&apos;s create something extraordinary together.
             </p>
           </motion.div>
         </div>
@@ -166,7 +166,7 @@ export default function PartnerPage() {
               Partnership Models
             </h2>
             <p className="text-white/50 max-w-xl mx-auto">
-              Multiple pathways to collaborate, tailored to your organization's needs and objectives.
+              Multiple pathways to collaborate, tailored to your organization&apos;s needs and objectives.
             </p>
           </motion.div>
 
@@ -250,7 +250,7 @@ export default function PartnerPage() {
                   style={{ backgroundColor: story.color }}
                 />
                 <blockquote className="text-white/80 text-lg mb-6 leading-relaxed">
-                  "{story.quote}"
+                  &ldquo;{story.quote}&rdquo;
                 </blockquote>
                 <div className="text-sm text-white/40 mb-2">{story.author}</div>
                 <div 

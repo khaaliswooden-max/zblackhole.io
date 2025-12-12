@@ -104,12 +104,12 @@ export default function ContactPage() {
               GET IN TOUCH
             </span>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold tracking-tight mb-6">
-              <span className="text-white">Let's Build the </span>
+              <span className="text-white">Let&apos;s Build the </span>
               <span className="gradient-text">Future Together</span>
             </h1>
             <p className="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto">
-              Whether you're exploring partnership opportunities, have questions about our platforms, 
-              or want to join our mission—we'd love to hear from you.
+              Whether you&apos;re exploring partnership opportunities, have questions about our platforms, 
+              or want to join our mission—we&apos;d love to hear from you.
             </p>
           </motion.div>
         </div>
@@ -178,7 +178,7 @@ export default function ContactPage() {
                   Message Sent!
                 </h3>
                 <p className="text-white/60 mb-8">
-                  Thank you for reaching out. We'll get back to you within 24-48 hours.
+                  Thank you for reaching out. We&apos;ll get back to you within 24-48 hours.
                 </p>
                 <button
                   onClick={() => {
@@ -197,7 +197,7 @@ export default function ContactPage() {
                     Send us a Message
                   </h2>
                   <p className="text-white/50">
-                    Fill out the form below and we'll respond as soon as possible.
+                    Fill out the form below and we&apos;ll respond as soon as possible.
                   </p>
                 </div>
 

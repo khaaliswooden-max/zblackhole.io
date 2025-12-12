@@ -356,7 +356,7 @@ export default function PlatformPage() {
               Key Features
             </h2>
             <p className="text-white/50">
-              Core capabilities that define {platform.name}'s value proposition.
+              Core capabilities that define {platform.name}&apos;s value proposition.
             </p>
           </motion.div>
 

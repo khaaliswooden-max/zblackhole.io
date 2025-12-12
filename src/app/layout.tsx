@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://zblackhole.io'),
   title: 'Zuup Innovation Lab | Where Ideas Collapse Into Reality',
   description: 'Zuup Innovation Lab develops breakthrough platforms at the intersection of AI, autonomy, procurement, compliance, and distributed systems. Seven proprietary technologies forging the future.',
   keywords: ['AI', 'innovation lab', 'autonomy', 'procurement', 'compliance', 'distributed systems', 'quantum computing', 'biotech'],
