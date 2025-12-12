@@ -356,7 +356,7 @@ export default function Home() {
               <a href="/privacy" className="hover:text-white/70 transition-colors">Privacy</a>
               <a href="/terms" className="hover:text-white/70 transition-colors">Terms</a>
               <a href="https://github.com/zuup-lab" target="_blank" rel="noopener noreferrer" className="hover:text-white/70 transition-colors">GitHub</a>
-              <a href="https://linkedin.com/company/zuup" target="_blank" rel="noopener noreferrer" className="hover:text-white/70 transition-colors">LinkedIn</a>
+              <a href="https://www.linkedin.com/in/khaalis-wooden-خالص-ودن-380336305" target="_blank" rel="noopener noreferrer" className="hover:text-white/70 transition-colors">LinkedIn</a>
             </div>
           </div>
         </div>

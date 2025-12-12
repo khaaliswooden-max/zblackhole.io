@@ -13,8 +13,8 @@ const contactMethods = [
       </svg>
     ),
     label: 'Email',
-    value: 'hello@zuup.io',
-    href: 'mailto:hello@zuup.io',
+    value: 'khaaliswooden@gmail.com',
+    href: 'mailto:khaaliswooden@gmail.com',
     color: '#3b82f6',
   },
   {
@@ -25,7 +25,7 @@ const contactMethods = [
       </svg>
     ),
     label: 'Location',
-    value: 'San Francisco, CA',
+    value: 'Huntsville, AL',
     href: null,
     color: '#f97316',
   },
@@ -47,8 +47,8 @@ const contactMethods = [
       </svg>
     ),
     label: 'LinkedIn',
-    value: 'linkedin.com/company/zuup',
-    href: 'https://linkedin.com/company/zuup',
+    value: 'Khaalis Wooden',
+    href: 'https://www.linkedin.com/in/khaalis-wooden-خالص-ودن-380336305',
     color: '#06b6d4',
   },
 ];
