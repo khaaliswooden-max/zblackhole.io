@@ -51,6 +51,7 @@ export default function Navigation() {
               </div>
               <span className="text-xl font-display font-semibold tracking-tight hidden sm:block">
                 <span className="gradient-text">Zuup</span>
+                <span className="text-white/60 font-light ml-1">Innovation Lab</span>
               </span>
             </Link>
 
