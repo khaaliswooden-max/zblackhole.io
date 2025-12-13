@@ -583,8 +583,8 @@ const OrbBenchDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6 rounded-2xl">
       <div className="max-w-7xl mx-auto">
-        {/* Navigation - Sticky tabs with solid background */}
-        <div className="sticky top-0 z-10 bg-gray-900 pt-2 pb-4 -mx-6 px-6">
+        {/* Navigation - Sticky tabs with solid background that covers scrolling content */}
+        <div className="sticky top-0 z-10 bg-gray-900 pt-2 pb-4 -mx-6 px-6 before:absolute before:content-[''] before:-top-20 before:left-0 before:right-0 before:h-20 before:bg-gray-900 relative">
           <div className="flex flex-wrap gap-2 bg-gray-800 rounded-xl p-2 shadow-lg">
           {tabs.map(tab => (
             <button
