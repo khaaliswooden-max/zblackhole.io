@@ -177,8 +177,13 @@ body {
 /* Seed input styles */
 .seed-input {
   @apply w-full bg-zuup-singularity border border-white/10 text-white rounded-lg px-4 py-3.5;
-  @apply focus:outline-none focus:border-[var(--seed-accent)] focus:ring-2 focus:ring-[var(--seed-accent)]/20;
   @apply placeholder:text-white/30 transition-all;
+}
+
+.seed-input:focus {
+  outline: none;
+  border-color: var(--seed-accent);
+  box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.2);
 }
 
 /* Seed glow animation */
