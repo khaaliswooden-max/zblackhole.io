@@ -1,6 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+
+// Dynamically import OrbBenchDashboard to avoid SSR issues with recharts
+const OrbBenchDashboard = dynamic(() => import('@/components/OrbBenchDashboard'), {
+  ssr: false,
+  loading: () => (
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+      <div className="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+    </div>
+  )
+});
 
 // ============================================================================
 // TYPES
@@ -464,6 +475,50 @@ Immutable quality certificates on-chain.`
 • FO7.2: Formal Verification
 • FO7.3: Computational Complexity`
   },
+  {
+    id: 'orb-bench',
+    name: 'ORB-BENCH',
+    platform: 'Orb World Model',
+    icon: '🌐',
+    color: 'from-indigo-500 to-purple-600',
+    summary: {
+      en: 'The ORB-BENCH Unified World Model Benchmark Framework evaluates generative world models across 7 domains and 30 metrics. It measures perceptual quality, geometric fidelity, spatial consistency, physical correctness, temporal coherence, condition alignment, and efficiency. This first-principles evaluation methodology distinguishes visually impressive models from those with true physical understanding.',
+      es: 'El Marco de Benchmark Unificado ORB-BENCH evalúa modelos de mundo generativos en 7 dominios y 30 métricas.',
+      ar: 'يُقيّم إطار معيار نموذج العالم الموحد ORB-BENCH نماذج العالم التوليدية عبر 7 مجالات و30 مقياسًا.',
+      de: 'Das ORB-BENCH Unified World Model Benchmark Framework evaluiert generative Weltmodelle über 7 Domänen und 30 Metriken.',
+      zh: 'ORB-BENCH统一世界模型基准框架评估7个领域和30个指标的生成式世界模型。',
+      fr: 'Le Framework ORB-BENCH évalue les modèles de monde génératifs sur 7 domaines et 30 métriques.',
+      ja: 'ORB-BENCH統合世界モデルベンチマークフレームワークは、7つのドメインと30のメトリクスで生成的世界モデルを評価します。',
+      pt: 'O Framework ORB-BENCH avalia modelos de mundo generativos em 7 domínios e 30 métricas.',
+    },
+    keyMetric: 'Composite Score',
+    target: '≥85/100',
+    dimensions: 7,
+    content: `# ORB-BENCH: World Model Benchmark
+
+## Seven Evaluation Domains
+
+| Domain | Code | Weight |
+|--------|------|--------|
+| Perceptual Quality | PQ | 15% |
+| Geometric Fidelity | GF | 20% |
+| Spatial Consistency | SC | 15% |
+| Physical Correctness | PC | 20% |
+| Temporal Coherence | TC | 10% |
+| Condition Alignment | CA | 10% |
+| Efficiency & Export | EE | 10% |
+
+## Metric Categories
+
+• ✓ 18 Verified (Established)
+• ◐ 7 Emerging (Plausible)
+• ◯ 5 Novel (Speculative)
+
+## Key Insight
+
+Visual realism ≠ physical correctness.
+Best models score <65% on Physics-IQ.`
+  },
 ];
 
 // ============================================================================
@@ -476,6 +531,7 @@ export default function ZuupBenchmarksPage() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [showOrbBench, setShowOrbBench] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -578,7 +634,13 @@ export default function ZuupBenchmarksPage() {
           {BENCHMARKS.map((benchmark) => (
             <button
               key={benchmark.id}
-              onClick={() => setSelectedBenchmark(benchmark)}
+              onClick={() => {
+                if (benchmark.id === 'orb-bench') {
+                  setShowOrbBench(true);
+                } else {
+                  setSelectedBenchmark(benchmark);
+                }
+              }}
               className="group relative bg-zinc-900/50 hover:bg-zinc-800/50 border border-zinc-800/50 hover:border-zinc-700 rounded-2xl p-6 text-left transition-all duration-300 hover:scale-[1.02]"
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${benchmark.color} opacity-0 group-hover:opacity-5 rounded-2xl transition-opacity`} />
@@ -695,6 +757,24 @@ export default function ZuupBenchmarksPage() {
                 Listen to Full Specification
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ORB-BENCH Dashboard Modal */}
+      {showOrbBench && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm overflow-y-auto" onClick={() => setShowOrbBench(false)}>
+          <div className="relative w-full max-w-7xl my-8" onClick={(e) => e.stopPropagation()}>
+            {/* Close Button */}
+            <button 
+              onClick={() => setShowOrbBench(false)} 
+              className="absolute -top-2 -right-2 z-10 w-12 h-12 rounded-full bg-indigo-600 hover:bg-indigo-500 flex items-center justify-center shadow-lg transition-all"
+            >
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <OrbBenchDashboard />
           </div>
         </div>
       )}
