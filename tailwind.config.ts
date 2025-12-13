@@ -18,6 +18,13 @@ const config: Config = {
           hawking: '#06b6d4',
           horizon: '#1e1e2e',
         },
+        seed: {
+          accent: '#00ff88',
+          accentDim: '#00cc6a',
+          fiat: '#00875a',
+          crypto: '#627eea',
+          warning: '#ffaa00',
+        },
       },
       fontFamily: {
         display: ['var(--font-display)', 'sans-serif'],

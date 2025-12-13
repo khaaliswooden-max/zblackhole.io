@@ -150,3 +150,43 @@ body {
 .platform-card:hover::before {
   opacity: 1;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+                         SEED FUNDING PAGE STYLES
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* Seed page color variables */
+:root {
+  --seed-accent: #00ff88;
+  --seed-accent-dim: #00cc6a;
+  --seed-fiat: #00875a;
+  --seed-crypto: #627eea;
+  --seed-warning: #ffaa00;
+}
+
+/* Seed card hover effect */
+.seed-card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.seed-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Seed input styles */
+.seed-input {
+  @apply w-full bg-zuup-singularity border border-white/10 text-white rounded-lg px-4 py-3.5;
+  @apply focus:outline-none focus:border-[var(--seed-accent)] focus:ring-2 focus:ring-[var(--seed-accent)]/20;
+  @apply placeholder:text-white/30 transition-all;
+}
+
+/* Seed glow animation */
+@keyframes seed-glow {
+  0%, 100% { border-color: rgba(0, 255, 136, 0.3); }
+  50% { border-color: rgba(0, 255, 136, 0.6); }
+}
+
+.animate-seed-glow {
+  animation: seed-glow 3s ease-in-out infinite;
+}

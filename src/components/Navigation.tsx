@@ -118,6 +118,14 @@ export default function Navigation() {
               </Link>
 
               <Link
+                href="/seed"
+                className="relative px-4 py-2 rounded-full font-medium overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-[#00ff88] to-[#627eea] opacity-80 group-hover:opacity-100 transition-opacity" />
+                <span className="relative text-black font-semibold text-sm">Seed Round</span>
+              </Link>
+
+              <Link
                 href="/partner"
                 className="relative px-5 py-2.5 rounded-full font-medium overflow-hidden group"
               >
@@ -219,6 +227,14 @@ export default function Navigation() {
                     Contact
                   </Link>
                 </div>
+
+                <Link
+                  href="/seed"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full text-center px-6 py-3 rounded-full font-medium bg-gradient-to-r from-[#00ff88] to-[#627eea] text-black mb-3"
+                >
+                  🌱 Seed Round Open
+                </Link>
 
                 <Link
                   href="/partner"
