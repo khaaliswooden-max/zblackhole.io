@@ -6,6 +6,8 @@ import Link from 'next/link';
 
 // Summaries data for translation and TTS
 const summaries: Record<string, string> = {
+  orb: `Orb™ is a spatial intelligence platform built on 3D Gaussian Splatting (3DGS) technology for persistent, navigable world model generation. Unlike language-centric AI, Orb enables systems to understand, generate, and simulate three-dimensional environments. The platform addresses compute scaling across 10⁴ orders of magnitude, with HBM4E memory architecture (64GB/stack, 2+ TB/s) as the critical enabler for edge deployment. Domain applications span military simulation (DARPA TIAMAT integration), surgical planning from CT/MRI, and autonomous swarm coordination. Orb integrates with the complete Zuup constellation—Aureon, Veyra, Civium, PodX, QAWM, Symbion, and Relian—positioning spatial intelligence as the central layer for post-ASI systems where recursive self-improvement may accelerate capability timelines by 10-100×.`,
+  
   master: `The Zuup Master Whitepaper presents a comprehensive technology stack comprising nine integrated platforms addressing civilization-scale challenges. The ecosystem operates on a fundamental optimization loop: Energy → Computation → Knowledge → Energy. Built on a three-layer Solana blockchain architecture (65,000 TPS, sub-second finality), it unifies procurement, AI governance, healthcare technology, edge computing, and legacy system modernization into a single coordinated framework. This document serves as the architectural blueprint connecting all Zuup platforms through shared trust infrastructure and quadratic voting governance.`,
   
   ecosystem: `This whitepaper details the Solana-based blockchain foundation powering the Zuup ecosystem. The three-layer architecture consists of Zuup-Solana (foundation layer for high-throughput processing), Zuup HQ (trust layer with role-based access control and SHA256 content-addressed storage), and Zuup DAO (governance layer implementing quadratic voting and futarchy mechanisms). Deployed on Solana Devnet, the system achieves 100% attestation coverage across all products with deployment costs under $0.02 USD, demonstrating enterprise-grade infrastructure for civilization-scale coordination.`,
@@ -58,6 +60,19 @@ interface WhitepaperData {
 }
 
 const whitepapers: WhitepaperData[] = [
+  {
+    key: 'orb',
+    icon: 'ORB',
+    iconClass: 'icon-orb',
+    title: 'Orb™',
+    subtitle: 'A Spatial Intelligence Platform for Persistent World Model Generation',
+    metrics: [
+      { value: '3DGS', label: 'Gaussian Splatting' },
+      { value: '10⁴', label: 'Compute Orders' },
+      { value: 'HBM4E', label: 'Memory Architecture' }
+    ],
+    pdfFile: 'orb.pdf'
+  },
   {
     key: 'master',
     icon: 'ZUUP',

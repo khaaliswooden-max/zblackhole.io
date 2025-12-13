@@ -188,6 +188,12 @@
 }
 
 /* Icon color variants */
+.icon-orb {
+  background: linear-gradient(135deg, #14b8a6, #06b6d4);
+  color: white;
+  box-shadow: 0 0 20px rgba(20, 184, 166, 0.3);
+}
+
 .icon-master {
   background: linear-gradient(135deg, var(--color-accretion), var(--color-gravitational));
   color: white;
