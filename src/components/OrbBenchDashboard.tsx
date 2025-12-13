@@ -603,12 +603,14 @@ const OrbBenchDashboard = () => {
           </div>
         </div>
 
-        {/* Content */}
+        {/* Content - with top margin to prevent overlap with sticky header */}
+        <div className="mt-4">
         {activeTab === 'overview' && renderOverview()}
         {activeTab === 'metrics' && renderMetrics()}
         {activeTab === 'physics' && renderPhysics()}
         {activeTab === 'evolution' && renderEvolution()}
         {activeTab === 'leaderboard' && renderLeaderboard()}
+        </div>
 
         {/* Footer */}
         <div className="mt-8 text-center text-gray-500 text-sm">
