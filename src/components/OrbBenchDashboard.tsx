@@ -1,15 +1,61 @@
 'use client';
 
 import React, { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, LineChart, Line, ScatterChart, Scatter, ZAxis, Cell, ComposedChart, Area } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ScatterChart, Scatter, ZAxis, Cell, ComposedChart, Area, Line } from 'recharts';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ORB-BENCH: UNIFIED WORLD MODEL BENCHMARK FRAMEWORK v1.0
 // Zuup Innovation Lab - First Principles Evaluation Methodology
 // ═══════════════════════════════════════════════════════════════════════════════
 
+interface Domain {
+  id: string;
+  name: string;
+  color: string;
+  weight: number;
+}
+
+interface MetricDefinition {
+  id: string;
+  domain: string;
+  name: string;
+  unit: string;
+  higher: boolean;
+  status: string;
+  formula: string;
+  threshold: {
+    poor: number;
+    fair: number;
+    good: number;
+    excellent: number;
+  };
+}
+
+interface ModelResult {
+  name: string;
+  type: string;
+  scores: {
+    PQ: number;
+    GF: number;
+    SC: number;
+    PC: number;
+    TC: number;
+    CA: number;
+    EE: number;
+  };
+  metrics: {
+    PSNR: number;
+    SSIM: number;
+    LPIPS: number;
+    PhysIQ: number;
+    GenTime: number;
+    FPS: number;
+  };
+}
+
 const OrbBenchDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
+  const [selectedModel, setSelectedModel] = useState('all');
 
   // ═══════════════════════════════════════════════════════════════════════════
   // BENCHMARK TAXONOMY: 7 DOMAINS × 5 LEVELS = 35 EVALUATION AXES
@@ -24,7 +70,7 @@ const OrbBenchDashboard = () => {
       { id: 'TC', name: 'Temporal Coherence', color: '#EF4444', weight: 0.10 },
       { id: 'CA', name: 'Condition Alignment', color: '#EC4899', weight: 0.10 },
       { id: 'EE', name: 'Efficiency & Export', color: '#6366F1', weight: 0.10 }
-    ],
+    ] as Domain[],
     levels: ['Fundamental', 'Composite', 'Dynamic', 'Interactive', 'Adversarial']
   };
 
@@ -32,7 +78,7 @@ const OrbBenchDashboard = () => {
   // VERIFIED METRICS (✓ = Established, ◐ = Emerging, ◯ = Novel)
   // ═══════════════════════════════════════════════════════════════════════════
 
-  const metricsDefinitions = [
+  const metricsDefinitions: MetricDefinition[] = [
     // PERCEPTUAL QUALITY (PQ)
     { id: 'PSNR', domain: 'PQ', name: 'Peak Signal-to-Noise Ratio', unit: 'dB', higher: true, status: '✓',
       formula: '10 × log₁₀(MAX² / MSE)', threshold: { poor: 25, fair: 28, good: 32, excellent: 35 } },
@@ -110,7 +156,7 @@ const OrbBenchDashboard = () => {
   // BENCHMARK RESULTS: SYNTHETIC + REAL WORLD EVALUATION DATA
   // ═══════════════════════════════════════════════════════════════════════════
 
-  const modelResults = [
+  const modelResults: ModelResult[] = [
     {
       name: 'Marble (World Labs)',
       type: 'Commercial',
@@ -188,6 +234,10 @@ const OrbBenchDashboard = () => {
 
   const COLORS = ['#3B82F6', '#10B981', '#8B5CF6', '#F59E0B', '#EF4444', '#EC4899'];
 
+  // Suppress unused variable warning
+  void selectedModel;
+  void setSelectedModel;
+
   // ═══════════════════════════════════════════════════════════════════════════
   // RENDER COMPONENTS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -199,7 +249,7 @@ const OrbBenchDashboard = () => {
         <h1 className="text-3xl font-bold mb-2">ORB-BENCH v1.0</h1>
         <p className="text-indigo-200 text-lg">Unified World Model Benchmark Framework</p>
         <p className="text-indigo-300 mt-2">7 Domains × 30 Metrics × 5 Evaluation Levels</p>
-        <div className="flex gap-4 mt-4 flex-wrap">
+        <div className="flex flex-wrap gap-4 mt-4">
           <span className="px-3 py-1 bg-green-500/20 rounded-full text-green-300 text-sm">✓ 18 Verified Metrics</span>
           <span className="px-3 py-1 bg-yellow-500/20 rounded-full text-yellow-300 text-sm">◐ 7 Emerging Metrics</span>
           <span className="px-3 py-1 bg-purple-500/20 rounded-full text-purple-300 text-sm">◯ 5 Novel Metrics</span>
@@ -531,7 +581,7 @@ const OrbBenchDashboard = () => {
   ];
 
   return (
-    <div className="bg-gray-900 text-white p-6 rounded-2xl">
+    <div className="min-h-screen bg-gray-900 text-white p-6 rounded-2xl">
       <div className="max-w-7xl mx-auto">
         {/* Navigation */}
         <div className="flex flex-wrap gap-2 mb-6 bg-gray-800 rounded-xl p-2">
