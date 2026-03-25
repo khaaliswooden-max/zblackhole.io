@@ -2,10 +2,12 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'About | Khaalis Wooden | Zuup Innovation Lab',
-  description: 'Thirty years of shop-floor wisdom meets frontier technology. Meet Khaalis Wooden, founder of Zuup Innovation Lab—veteran, builder, journeyman.',
+  description:
+    'Founder credentials and timeline for Khaalis Wooden, Zuup Innovation Lab, Huntsville, Alabama.',
   openGraph: {
     title: 'About | Khaalis Wooden | Zuup Innovation Lab',
-    description: 'Thirty years of shop-floor wisdom meets frontier technology. Meet Khaalis Wooden, founder of Zuup Innovation Lab.',
+    description:
+      'Founder credentials and timeline for Khaalis Wooden, Zuup Innovation Lab.',
     type: 'profile',
     firstName: 'Khaalis',
     lastName: 'Wooden',
@@ -13,7 +15,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'About | Khaalis Wooden | Zuup Innovation Lab',
-    description: 'Thirty years of shop-floor wisdom meets frontier technology.',
+    description: 'Founder credentials and timeline for Khaalis Wooden, Zuup Innovation Lab.',
   },
 };
 

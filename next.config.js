@@ -1,6 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: '/platforms/qawm',
+        destination: '/platforms/qal',
+        permanent: true,
+      },
+    ];
+  },
   transpilePackages: ['three'],
   webpack: (config) => {
     config.externals.push({

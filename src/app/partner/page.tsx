@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import Navigation from '@/components/Navigation';
 
 const partnershipTypes = [
   {
@@ -122,7 +121,6 @@ export default function PartnerPage() {
 
   return (
     <main className="relative min-h-screen bg-zuup-void">
-      <Navigation />
 
       {/* Background Effects */}
       <div className="fixed inset-0 -z-10">
@@ -146,8 +144,8 @@ export default function PartnerPage() {
               <span className="gradient-text">With Us</span>
             </h1>
             <p className="text-lg sm:text-xl text-white/60 max-w-3xl mx-auto">
-              We partner with visionary organizations to deploy breakthrough solutions in AI trust, 
-              blockchain infrastructure, and autonomous systems. Let&apos;s create something extraordinary together.
+              We partner on Solana trust rails, procurement automation, and field compute programs. 
+              Contact maps to federal, enterprise, and research tracks.
             </p>
           </motion.div>
         </div>

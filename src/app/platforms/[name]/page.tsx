@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useParams, notFound } from 'next/navigation';
-import Navigation from '@/components/Navigation';
 
 const platformsData: Record<string, {
   name: string;
@@ -18,11 +17,57 @@ const platformsData: Record<string, {
   status: string;
   metrics: { label: string; value: string }[];
 }> = {
+  zhq: {
+    name: 'Zuup HQ',
+    tagline: 'Trust Infrastructure',
+    description: 'On-chain RBAC, attestations, and program governance shared across Zuup products.',
+    longDescription: 'Zuup HQ registers roles, stores attestation events, and ties release artifacts to Solana transactions for audit.',
+    color: 'var(--fg-muted)',
+    icon: 'Z',
+    features: [
+      { title: 'RBAC mapping', description: 'Role-to-account links enforced in program instruction paths.' },
+      { title: 'Attestation log', description: 'Append-only events for builds, migrations, and model releases.' },
+      { title: 'Content addressing', description: 'SHA256 references anchored on devnet for artifact provenance.' },
+      { title: 'Governance hooks', description: 'Instruction surfaces reserved for quorum-approved upgrades.' },
+    ],
+    useCases: ['Cross-product identity', 'Signed deployments', 'Migration witness'],
+    techStack: ['Solana', 'Rust', 'Anchor'],
+    status: 'Devnet',
+    metrics: [
+      { label: 'Network', value: 'Devnet' },
+      { label: 'Attestation coverage', value: '100%' },
+      { label: 'Program ID', value: 'Public' },
+      { label: 'Block time', value: '~400ms' },
+    ],
+  },
+  zsd: {
+    name: 'ZUSDC',
+    tagline: 'Stablecoin + Agent Treasury',
+    description: 'Mint-burn logic with reserve proofs and agent treasury accounts on Solana devnet.',
+    longDescription: 'ZUSDC contract tracks collateral reporting windows, mints to treasury PDAs, and burns on settlement.',
+    color: 'var(--fg-muted)',
+    icon: 'S',
+    features: [
+      { title: 'Reserve checks', description: 'Scheduled proof uploads compared to on-chain parameters.' },
+      { title: 'Agent treasury', description: 'PDA-scoped budgets for autonomous spend limits.' },
+      { title: 'Mint / burn', description: 'Atomic instructions tied to approved tranche events.' },
+      { title: 'Devnet limits', description: 'Supply caps enforced for test issuance.' },
+    ],
+    useCases: ['Seed tranche tests', 'Agent allocation drills'],
+    techStack: ['Solana', 'Rust'],
+    status: 'Devnet',
+    metrics: [
+      { label: 'Environment', value: 'Solana devnet' },
+      { label: 'Mint status', value: 'Gated' },
+      { label: 'Treasury model', value: 'PDA' },
+      { label: 'Decimals', value: '6' },
+    ],
+  },
   aureon: {
     name: 'Aureon',
     tagline: 'Procurement Substrate',
     description: 'AI-native infrastructure transforming how organizations discover, evaluate, and execute procurement at scale.',
-    longDescription: 'Aureon is a revolutionary procurement platform that leverages multi-agent AI systems to optimize every stage of the procurement lifecycle. From intelligent supplier discovery to automated contract negotiation, Aureon transforms procurement from a cost center into a strategic advantage.',
+    longDescription: 'Aureon runs multi-agent procurement workflows: solicitation intake, supplier evaluation, and obligation checks against FAR and commercial rules before funds move.',
     color: '#3b82f6',
     icon: '◈',
     features: [
@@ -76,7 +121,7 @@ const platformsData: Record<string, {
   },
   civium: {
     name: 'Civium',
-    tagline: 'Compliance Engine',
+    tagline: 'Global Halal Compliance OS',
     description: 'Real-time regulatory intelligence and automated compliance verification for complex environments.',
     longDescription: 'Civium provides enterprise-grade compliance automation with a focus on Halal certification, regulatory compliance, and supply chain transparency. The platform continuously monitors regulatory changes and automatically updates compliance workflows.',
     color: '#a855f7',
@@ -104,22 +149,22 @@ const platformsData: Record<string, {
   },
   relian: {
     name: 'Relian',
-    tagline: 'AI Trust Infrastructure',
-    description: 'Enterprise-grade AI reliability, governance, and trust verification for mission-critical deployments.',
-    longDescription: 'Relian is the Global Refactoring OS—a comprehensive platform for ensuring AI system reliability, establishing governance frameworks, and providing cryptographic trust verification. Built on Zuup HQ, Relian enables organizations to deploy AI with confidence.',
+    tagline: 'Global Refactoring OS',
+    description: 'Legacy migration pipelines with automated tests and on-chain attestation of promoted builds.',
+    longDescription: 'Relian maps migration stages from COBOL, Ada, and Fortran sources to target languages, with symbolic execution tests and hashes anchored in Zuup HQ.',
     color: '#eab308',
     icon: '◆',
     features: [
-      { title: 'Model Attestation', description: 'Cryptographic verification of AI model integrity and provenance.' },
-      { title: 'Output Verification', description: 'Real-time validation of AI outputs against safety constraints.' },
-      { title: 'Governance Framework', description: 'Configurable policies for AI deployment, access, and escalation.' },
-      { title: 'Trust Scoring', description: 'Dynamic trust scores based on model performance and reliability history.' },
+      { title: 'Semantic parse', description: 'LLM-assisted parse from legacy sources to target ASTs.' },
+      { title: 'Symbolic tests', description: 'Generated suites executed before merge to target branch.' },
+      { title: 'Risk scoring', description: 'Classifiers flag likely defect classes on migrated modules.' },
+      { title: 'Attested promotion', description: 'Build hashes and reports stored in Zuup HQ.' },
     ],
     useCases: [
-      'Enterprise AI deployment',
-      'Regulated industry AI adoption',
-      'Multi-model orchestration',
-      'AI safety and alignment verification',
+      'COBOL and Ada modernization',
+      'Regulated batch migrations',
+      'Symbolically tested releases',
+      'Hash-witnessed promotions',
     ],
     techStack: ['Solana', 'Zuup HQ', 'Python', 'Rust'],
     status: 'Production',
@@ -161,8 +206,8 @@ const platformsData: Record<string, {
   symbion: {
     name: 'Symbion',
     tagline: 'Gut-Brain Interface',
-    description: 'Ingestible biosensors revolutionizing gut-brain axis research and personalized health.',
-    longDescription: 'Symbion represents the frontier of biotech innovation—an ingestible biosensor platform that provides unprecedented insight into the gut-brain axis. By enabling continuous monitoring of gut microbiome activity and its neurological correlates, Symbion opens new possibilities for personalized medicine.',
+    description: 'Ingestible biosensors for gut-brain axis measurements in study protocols.',
+    longDescription: 'Symbion ships an ingestible biosensor, phone relay, and cloud analytics for gut-brain biomarker series used in study protocols.',
     color: '#22c55e',
     icon: '◉',
     features: [
@@ -186,11 +231,11 @@ const platformsData: Record<string, {
       { label: 'Clinical Trials', value: 'Phase I' },
     ],
   },
-  qawm: {
-    name: 'QAWM',
-    tagline: 'Quantum Archaeology',
-    description: 'Applying quantum computing methodologies to reconstruct and analyze historical data patterns.',
-    longDescription: 'QAWM (Quantum Archaeology Working Model) pioneers the application of quantum computing techniques to historical data reconstruction. By leveraging quantum algorithms for pattern recognition and data interpolation, QAWM enables unprecedented insights into incomplete historical records.',
+  qal: {
+    name: 'QAL',
+    tagline: 'Quantum Archeology Labs OS',
+    description: 'Layered causal reconstruction of past system states from sparse present-day traces.',
+    longDescription: 'QAL defines a five-layer causal stack, query surface, and posterior reporting for historical reconstruction workloads paired with classical and quantum solvers where available.',
     color: '#ec4899',
     icon: '⬢',
     features: [
@@ -238,8 +283,9 @@ const itemVariants = {
 
 export default function PlatformPage() {
   const params = useParams();
-  const platformName = params.name as string;
-  const platform = platformsData[platformName?.toLowerCase()];
+  const raw = params.name as string;
+  const key = raw?.toLowerCase();
+  const platform = platformsData[key];
 
   if (!platform) {
     notFound();
@@ -247,7 +293,6 @@ export default function PlatformPage() {
 
   return (
     <main className="relative min-h-screen bg-zuup-void">
-      <Navigation />
 
       {/* Background Effects */}
       <div className="fixed inset-0 -z-10">
@@ -530,11 +575,11 @@ export default function PlatformPage() {
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
           >
             {Object.entries(platformsData)
-              .filter(([key]) => key !== platformName?.toLowerCase())
-              .map(([key, p]) => (
-                <motion.div key={key} variants={itemVariants}>
+              .filter(([slug]) => slug !== key)
+              .map(([slug, p]) => (
+                <motion.div key={slug} variants={itemVariants}>
                   <Link
-                    href={`/platforms/${key}`}
+                    href={`/platforms/${slug}`}
                     className="block p-4 rounded-xl border border-white/10 bg-zuup-singularity/50 hover:bg-zuup-singularity/80 transition-all group text-center"
                   >
                     <div 
