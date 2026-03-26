@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { canonicalPapers, orbPaper } from '@/lib/papers';
+import { benchmarks } from '@/lib/benchmarks';
 
 const VOICE_ID = process.env.ELEVENLABS_VOICE_ID ?? 'pNInz6obpgDQGcFmaJgB'; // Adam
 const MODEL_ID = 'eleven_turbo_v2_5';
@@ -8,6 +9,8 @@ function getNarration(slug: string): string | null {
   const paper = canonicalPapers.find((p) => p.audioBase === slug);
   if (paper) return paper.narration;
   if (slug === orbPaper.audioBase) return orbPaper.narration;
+  const bench = benchmarks.find((b) => b.audioSlug === slug);
+  if (bench) return bench.narration;
   return null;
 }
 

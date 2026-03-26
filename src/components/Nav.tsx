@@ -9,7 +9,6 @@ const LINKS = [
   { href: '/whitepapers', label: 'Whitepapers' },
   { href: '/benchmarks', label: 'Benchmarks' },
   { href: '/research', label: 'Research' },
-  { href: '/seed', label: 'Seed' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ];

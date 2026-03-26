@@ -1,105 +1,110 @@
-type Metric = {
-  value: string;
-  platform: string;
-  name: string;
-  label: string;
-  bar: number;
-};
+'use client';
 
-function MetricCell({ m }: { m: Metric }) {
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
+import AudioPlayer from '@/components/AudioPlayer';
+import { benchmarks, type Benchmark } from '@/lib/benchmarks';
+
+const BenchmarkChart3D = dynamic(
+  () => import('@/components/BenchmarkChart3D'),
+  { ssr: false }
+);
+
+function FullDescription({ text }: { text: string }) {
   return (
     <div
-      className="flex flex-col gap-2 border p-4 font-mono"
-      style={{ borderColor: 'var(--line)', background: 'var(--bg)' }}
+      className="mt-4 font-mono text-[11px] leading-relaxed"
+      style={{ color: 'var(--fg-dim)', whiteSpace: 'pre-line' }}
     >
-      <span className="text-[36px] font-light tabular-nums leading-none" style={{ color: 'var(--fg)' }}>
-        {m.value}
-      </span>
-      <span className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--fg-muted)' }}>
-        {m.platform}
-      </span>
-      <span className="text-[9px] uppercase tracking-wider" style={{ color: 'var(--fg-muted)' }}>
-        {m.name}
-      </span>
-      <span className="text-[11px]" style={{ color: 'var(--fg-dim)' }}>
-        {m.label}
-      </span>
-      <div className="mt-2 h-0.5 w-full" style={{ background: 'var(--line)' }}>
-        <div
-          className="h-0.5"
-          style={{
-            width: `${m.bar}%`,
-            background: 'var(--fg-muted)',
-          }}
-        />
-      </div>
+      {text}
     </div>
   );
 }
 
-export default function BenchmarksPage() {
-  const sections: { title: string; metrics: Metric[] }[] = [
-    {
-      title: 'PodX (XdoP Composite)',
-      metrics: [
-        { value: '100', platform: 'PODX', name: 'WCBI Score', label: 'Weighted Composite', bar: 100 },
-        { value: '99.99%', platform: 'PODX', name: 'Availability', label: 'Uptime Target', bar: 100 },
-        { value: '24hr+', platform: 'PODX', name: 'DDIL Autonomy', label: 'Off-grid Runtime', bar: 85 },
-        { value: '320', platform: 'PODX', name: 'AI Inference', label: 'TOPS', bar: 90 },
-      ],
-    },
-    {
-      title: 'Symbion (Clinical Validation)',
-      metrics: [
-        { value: '92.5%', platform: 'SYMBION', name: 'Sensitivity', label: 'Neurotransmitter Detection', bar: 93 },
-        { value: '94.3%', platform: 'SYMBION', name: 'Specificity', label: 'False Positive Rate', bar: 94 },
-        { value: '4', platform: 'SYMBION', name: 'Biomarkers', label: 'Serotonin, Dopamine, GABA, pH', bar: 80 },
-        { value: '50M', platform: 'SYMBION', name: 'Target Users', label: 'By 2030', bar: 70 },
-      ],
-    },
-    {
-      title: 'Relian (Migration Performance)',
-      metrics: [
-        { value: '100x', platform: 'RELIAN', name: 'Speed', label: 'vs Manual Migration', bar: 100 },
-        { value: '99%', platform: 'RELIAN', name: 'Cost Reduction', label: 'vs Industry Average', bar: 99 },
-        { value: '85%+', platform: 'RELIAN', name: 'Risk Accuracy', label: 'ML Defect Prediction', bar: 85 },
-        { value: '80%+', platform: 'RELIAN', name: 'Test Coverage', label: 'Automated via Symbolic Exec', bar: 80 },
-      ],
-    },
-    {
-      title: 'Zuup HQ (Chain Infrastructure)',
-      metrics: [
-        { value: '65K', platform: 'ZHQ', name: 'TPS', label: 'Solana Throughput', bar: 100 },
-        { value: '400ms', platform: 'ZHQ', name: 'Block Time', label: 'Sub-second Finality', bar: 95 },
-        { value: '100%', platform: 'ZHQ', name: 'Attestation', label: 'Coverage Across Products', bar: 100 },
-        { value: '$0.02', platform: 'ZHQ', name: 'Deploy Cost', label: 'Per Transaction (Devnet)', bar: 75 },
-      ],
-    },
-  ];
+function BenchmarkCard({ bench }: { bench: Benchmark }) {
+  const [open, setOpen] = useState(false);
 
+  return (
+    <section className="border-t pt-10 pb-4" style={{ borderColor: 'var(--line)' }}>
+      {/* Header row */}
+      <div className="mb-5 flex flex-wrap items-start justify-between gap-4">
+        <div className="flex flex-col gap-1">
+          <div className="flex flex-wrap items-center gap-3">
+            <span
+              className="font-mono text-[11px] uppercase tracking-wider"
+              style={{ color: 'var(--fg-muted)' }}
+            >
+              {bench.platform}
+            </span>
+            <span
+              className="border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider"
+              style={{ borderColor: 'var(--line)', color: 'var(--fg-dim)' }}
+            >
+              {bench.code}
+            </span>
+          </div>
+          <h2
+            className="font-mono text-[15px] font-normal leading-snug"
+            style={{ color: 'var(--fg)' }}
+          >
+            {bench.title}
+          </h2>
+        </div>
+        <AudioPlayer src={`/api/narrate/${bench.audioSlug}`} label="Summary" />
+      </div>
+
+      {/* 3D Chart */}
+      <div className="mb-5 border" style={{ borderColor: 'var(--line)' }}>
+        <BenchmarkChart3D metrics={bench.chartMetrics} />
+      </div>
+
+      {/* Short summary */}
+      <p className="body-small mb-4 max-w-3xl">{bench.summary}</p>
+
+      {/* Full description accordion */}
+      <button
+        type="button"
+        onClick={() => setOpen((v: boolean) => !v)}
+        className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider transition-colors duration-150"
+        style={{
+          color: open ? 'var(--fg-dim)' : 'var(--fg-muted)',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          padding: 0,
+        }}
+      >
+        <span
+          style={{
+            display: 'inline-block',
+            transform: open ? 'rotate(90deg)' : 'rotate(0deg)',
+            transition: 'transform 150ms ease',
+          }}
+        >
+          ▶
+        </span>
+        {open ? 'Hide' : 'Full Description'}
+      </button>
+
+      {open && <FullDescription text={bench.fullDescription} />}
+    </section>
+  );
+}
+
+export default function BenchmarksPage() {
   return (
     <main className="page-shell">
       <h1 className="mb-2 font-mono text-xl font-normal" style={{ color: 'var(--fg)' }}>
         Benchmarks
       </h1>
-      <p className="body-small mb-12 max-w-2xl">
-        Composite metrics by platform. Bars are scaled within each section for comparison.
+      <p className="body-small mb-4 max-w-2xl">
+        Nine benchmark frameworks across the Zuup ecosystem. Each chart is interactive — drag to
+        rotate. Audio plays a summary narration.
       </p>
-      <div className="flex flex-col gap-16">
-        {sections.map((sec) => (
-          <section key={sec.title}>
-            <h2 className="mb-6 font-mono text-[13px] font-medium uppercase tracking-wide" style={{ color: 'var(--fg-dim)' }}>
-              {sec.title}
-            </h2>
-            <div
-              className="grid gap-4 max-[900px]:grid-cols-1"
-              style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}
-            >
-              {sec.metrics.map((m) => (
-                <MetricCell key={m.name + m.label} m={m} />
-              ))}
-            </div>
-          </section>
+
+      <div className="flex flex-col">
+        {benchmarks.map((bench) => (
+          <BenchmarkCard key={bench.key} bench={bench} />
         ))}
       </div>
     </main>
