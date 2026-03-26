@@ -32,7 +32,7 @@ function Card({ paper }: { paper: Paper }) {
         >
           Download PDF
         </a>
-        <AudioPlayer src={`/audio/whitepapers/${paper.audioBase}.mp3`} label="Play" />
+        <AudioPlayer src={`/api/narrate/${paper.audioBase}`} label="Play" />
       </div>
     </article>
   );
@@ -98,7 +98,7 @@ export default function WhitepapersPage() {
             >
               Download PDF
             </a>
-            <AudioPlayer src={`/audio/whitepapers/${orbPaper.audioBase}.mp3`} label="Play" />
+            <AudioPlayer src={`/api/narrate/${orbPaper.audioBase}`} label="Play" />
           </div>
         </article>
       </section>
