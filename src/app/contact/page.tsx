@@ -52,6 +52,7 @@ export default function ContactPage() {
     {
       label: 'On-Chain',
       value: 'H1eSx6ij1Q296Tzss62AHuamn1rD4a9MkDapYu1CyvVM',
+      href: 'https://explorer.solana.com/address/H1eSx6ij1Q296Tzss62AHuamn1rD4a9MkDapYu1CyvVM',
     },
   ];
 
