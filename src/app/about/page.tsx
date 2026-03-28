@@ -22,7 +22,7 @@ const chapters = [
   {
     anchor: '2006 – 2022',
     headline: 'The long way around.',
-    body: `Sixteen years of finding footing in civilian life. Hibbett Sports — twelve stores, $10M in operations. Arizona State and Columbus State — ERP/CRM rollouts and a 21% enrollment surge. A USDA-certified halal poultry operation. A creative brand. A performance wellness company. I wasn't wandering — I was collecting patterns. My brain doesn't let me do anything halfway. I'm neurodivergent, and I've learned to lean into the obsessive depth that comes with that rather than fight it. Every industry I touched, I mapped the whole system, not just my corner of it. That hyperconnective way of seeing became my edge.`,
+    body: `Sixteen years of finding footing in civilian life. Hibbett Sports — twelve stores, $10M in operations. Albany State and Columbus State — ERP/CRM rollouts and a 21% enrollment surge. A USDA-certified halal poultry operation. A creative brand. A performance wellness company. I wasn't wandering — I was collecting patterns. My brain doesn't let me do anything halfway. I'm neurodivergent, and I've learned to lean into the obsessive depth that comes with that rather than fight it. Every industry I touched, I mapped the whole system, not just my corner of it. That hyperconnective way of seeing became my edge.`,
   },
   {
     anchor: '2020 – 2024',
