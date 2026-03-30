@@ -54,7 +54,7 @@ export default function RootLayout({
       <body className="antialiased">
         <SiteHeader />
         <SlideshowHero />
-        <div style={{ paddingTop: 'var(--header-offset)' }}>{children}</div>
+        <div style={{ paddingTop: 'var(--header-offset)', position: 'relative', zIndex: 1 }}>{children}</div>
       </body>
     </html>
   );

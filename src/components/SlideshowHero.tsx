@@ -37,10 +37,9 @@ export default function SlideshowHero() {
     <div
       aria-hidden="true"
       style={{
-        position: 'relative',
-        width: '100%',
-        height: '100vh',
-        overflow: 'hidden',
+        position: 'fixed',
+        inset: 0,
+        zIndex: 0,
       }}
     >
       {SLIDES.map((slide, i) => (
@@ -68,7 +67,7 @@ export default function SlideshowHero() {
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'rgba(0,0,0,0.55)',
+          background: 'rgba(255,255,255,0.78)',
           zIndex: 10,
         }}
       />
