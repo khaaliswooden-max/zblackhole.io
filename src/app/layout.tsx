@@ -1,7 +1,12 @@
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import '@/styles/tokens.css';
 import './globals.css';
 import SiteHeader from '@/components/SiteHeader';
+
+const SlideshowHero = dynamic(() => import('@/components/SlideshowHero'), {
+  ssr: false,
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://zblackhole.io'),
@@ -48,6 +53,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased">
         <SiteHeader />
+        <SlideshowHero />
         <div style={{ paddingTop: 'var(--header-offset)' }}>{children}</div>
       </body>
     </html>

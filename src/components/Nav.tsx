@@ -27,7 +27,9 @@ export default function Nav() {
       style={{
         top: 48,
         height: 52,
-        background: 'var(--bg)',
+        background: 'rgba(255,255,255,0.82)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
         borderBottom: '1px solid var(--line)',
       }}
     >

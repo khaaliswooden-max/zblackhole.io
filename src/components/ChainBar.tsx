@@ -17,7 +17,9 @@ export default function ChainBar() {
       className="chain-pulse-anchor fixed top-0 left-0 right-0 z-[100] font-mono text-[11px]"
       style={{
         height: 48,
-        background: 'var(--bg)',
+        background: 'rgba(255,255,255,0.82)',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
         borderBottom: '1px solid var(--line)',
         color: 'var(--fg-dim)',
       }}
