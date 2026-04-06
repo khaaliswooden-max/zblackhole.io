@@ -89,7 +89,7 @@ export default function Home() {
         </p>
       </section>
 
-      {/* World Model Canvas — replaces platform grid */}
+      {/* World Model Canvas */}
       <section className="border-t" style={{ borderColor: 'var(--line)' }}>
         <WorldCanvas />
       </section>
@@ -105,7 +105,7 @@ export default function Home() {
               fontFamily: 'var(--font-sans, sans-serif)',
               fontWeight: 700,
               fontSize: 28,
-              color: '#f0ece4',
+              color: 'var(--fg)',
               margin: 0,
             }}
           >

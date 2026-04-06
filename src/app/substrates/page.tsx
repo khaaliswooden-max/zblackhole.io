@@ -40,9 +40,8 @@ export default function SubstratesPage() {
 
       <section className="page-shell border-t" style={{ borderColor: 'var(--line)' }}>
         <div
-          className="grid gap-px max-[900px]:grid-cols-1"
+          className="grid grid-cols-3 gap-px max-[900px]:grid-cols-1"
           style={{
-            gridTemplateColumns: 'repeat(3, 1fr)',
             background: 'var(--line)',
             border: '1px solid var(--line)',
           }}
