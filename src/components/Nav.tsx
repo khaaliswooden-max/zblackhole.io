@@ -5,12 +5,10 @@ import { usePathname } from 'next/navigation';
 import { useChainSlot } from './ChainSlotContext';
 
 const LINKS = [
-  { href: '/platforms', label: 'Platforms' },
-  { href: '/whitepapers', label: 'Whitepapers' },
-  { href: '/benchmarks', label: 'Benchmarks' },
+  { href: '/world', label: 'World' },
+  { href: '/substrates', label: 'Substrates' },
   { href: '/research', label: 'Research' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/build', label: 'Build' },
 ];
 
 function formatSlot(n: number) {
