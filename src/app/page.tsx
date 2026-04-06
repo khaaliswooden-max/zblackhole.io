@@ -1,15 +1,12 @@
 import Link from 'next/link';
-import {
-  PLATFORMS,
-  statusClass,
-  statusLabel,
-} from '@/lib/platforms';
+import WorldCanvas from '@/components/WorldCanvas';
 
 const PROGRAM = 'H1eSx6ij1Q296Tzss62AHuamn1rD4a9MkDapYu1CyvVM';
 
 export default function Home() {
   return (
     <main>
+      {/* Hero — unchanged */}
       <section className="page-shell">
         <div
           className="grid gap-12 max-[900px]:grid-cols-1"
@@ -34,8 +31,8 @@ export default function Home() {
               migration, spatial research, quantum reconstruction, and treasury rails.
             </p>
             <div className="cta-row">
-              <Link href="/platforms" className="btn-outline">
-                Platforms
+              <Link href="/substrates" className="btn-outline">
+                Substrates
               </Link>
               <Link href="/whitepapers" className="btn-outline">
                 Whitepapers
@@ -76,6 +73,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Tagline — unchanged */}
       <section
         className="border-t px-12 py-16 max-[900px]:px-6"
         style={{ borderColor: 'var(--line)' }}
@@ -91,35 +89,50 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="page-shell border-t" style={{ borderColor: 'var(--line)' }}>
-        <div
-          className="grid gap-px max-[900px]:grid-cols-1"
-          style={{
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            background: 'var(--line)',
-            border: '1px solid var(--line)',
-          }}
-        >
-          {PLATFORMS.map((p) => (
-            <div
-              key={p.id}
-              className="p-6"
-              style={{ background: 'var(--bg)' }}
-            >
-              <div className="mb-3 font-mono text-[11px]" style={{ color: 'var(--fg-muted)' }}>
-                {p.id}
-              </div>
-              <div className="mono-14 mb-1">{p.name}</div>
-              <p className="body-small mb-4 min-h-[2.75rem]">{p.domain}</p>
-              <p className="body-small mb-1" style={{ color: 'var(--fg-dim)' }}>
-                {p.gridSummary[0]}
-              </p>
-              <p className="body-small mb-4" style={{ color: 'var(--fg-dim)' }}>
-                {p.gridSummary[1]}
-              </p>
-              <span className={statusClass(p.status)}>{statusLabel(p.status)}</span>
-            </div>
-          ))}
+      {/* World Model Canvas — replaces platform grid */}
+      <section className="border-t" style={{ borderColor: 'var(--line)' }}>
+        <WorldCanvas />
+      </section>
+
+      {/* ZWM copy below canvas */}
+      <section
+        className="border-t px-12 py-12 max-[900px]:px-6"
+        style={{ borderColor: 'var(--line)' }}
+      >
+        <div className="mx-auto flex max-w-[1200px] flex-col gap-3">
+          <p
+            style={{
+              fontFamily: 'var(--font-sans, sans-serif)',
+              fontWeight: 700,
+              fontSize: 28,
+              color: '#f0ece4',
+              margin: 0,
+            }}
+          >
+            The institutional world model.
+          </p>
+          <p
+            style={{
+              fontFamily: "'IBM Plex Mono', monospace",
+              fontSize: 22,
+              color: '#888880',
+              margin: 0,
+            }}
+          >
+            Nine substrates. One causal graph. Live on Solana.
+          </p>
+          <Link
+            href="/build"
+            style={{
+              fontFamily: "'IBM Plex Mono', monospace",
+              fontSize: 22,
+              color: '#1A1A2E',
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            Access the ZWM →
+          </Link>
         </div>
       </section>
 
