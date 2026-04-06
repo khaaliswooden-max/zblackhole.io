@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import type { NodeObject, LinkObject } from 'react-force-graph-2d';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), { ssr: false });
@@ -13,18 +14,15 @@ type NodeType =
   | 'BiologicalState'
   | 'SubstrateEvent';
 
-interface GraphNode {
-  id: string;
+type LinkType = 'HAS_STATE' | 'CAUSED_BY';
+
+interface GraphNode extends NodeObject {
   type: NodeType;
   timestamp: string;
-  x?: number;
-  y?: number;
 }
 
-interface GraphLink {
-  source: string | GraphNode;
-  target: string | GraphNode;
-  type: 'HAS_STATE' | 'CAUSED_BY';
+interface GraphLink extends LinkObject {
+  type: LinkType;
 }
 
 const NODE_COLOR: Record<NodeType, string> = {
@@ -96,7 +94,7 @@ export default function WorldCanvas() {
   }, []);
 
   const nodeCanvasObject = useCallback(
-    (node: object, ctx: CanvasRenderingContext2D, globalScale: number) => {
+    (node: NodeObject, ctx: CanvasRenderingContext2D, globalScale: number) => {
       const n = node as GraphNode;
       const x = n.x ?? 0;
       const y = n.y ?? 0;
@@ -112,22 +110,25 @@ export default function WorldCanvas() {
       ctx.font = `${fontSize}px 'IBM Plex Mono', monospace`;
       ctx.fillStyle = '#888880';
       ctx.textAlign = 'center';
-      ctx.fillText(n.id, x, y + r + fontSize + 1);
+      ctx.fillText(String(n.id ?? ''), x, y + r + fontSize + 1);
     },
     []
   );
 
-  const handleNodeClick = useCallback((node: object) => {
-    setSelected(node as GraphNode);
-  }, []);
+  const handleNodeClick = useCallback(
+    (node: NodeObject, _event: MouseEvent) => {
+      setSelected(node as GraphNode);
+    },
+    []
+  );
 
   const getLinkColor = useCallback(
-    (link: object) => ((link as GraphLink).type === 'CAUSED_BY' ? '#D85A30' : 'rgba(255,255,255,0.25)'),
+    (link: LinkObject) => ((link as GraphLink).type === 'CAUSED_BY' ? '#D85A30' : 'rgba(255,255,255,0.25)'),
     []
   );
 
   const getLinkWidth = useCallback(
-    (link: object) => ((link as GraphLink).type === 'CAUSED_BY' ? 1.5 : 1),
+    (link: LinkObject) => ((link as GraphLink).type === 'CAUSED_BY' ? 1.5 : 1),
     []
   );
 
@@ -137,7 +138,7 @@ export default function WorldCanvas() {
       style={{ width: '100%', height: '60vh', background: '#0a0a0a', position: 'relative' }}
     >
       <ForceGraph2D
-        graphData={{ nodes: MOCK_NODES as object[], links: MOCK_LINKS as object[] }}
+        graphData={{ nodes: MOCK_NODES, links: MOCK_LINKS }}
         backgroundColor="#0a0a0a"
         width={dims.width}
         height={dims.height}
@@ -198,7 +199,7 @@ export default function WorldCanvas() {
               wordBreak: 'break-all',
             }}
           >
-            {selected.id}
+            {String(selected.id ?? '')}
           </div>
           <div style={{ fontSize: 10, color: '#888880' }}>
             {selected.timestamp.replace('T', ' ').slice(0, 19)} UTC
