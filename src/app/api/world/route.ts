@@ -44,7 +44,7 @@ interface WorldGraph {
 
 async function fetchFromUpstream(url: string): Promise<WorldGraph | null> {
   try {
-    const res = await fetch(url, { next: { revalidate: 30 } });
+    const res = await fetch(url);
     if (!res.ok) return null;
     const data = await res.json();
     return { ...data, fetchedAt: new Date().toISOString() };
