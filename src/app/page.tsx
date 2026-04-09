@@ -32,11 +32,11 @@ export default function Home() {
               migration, spatial research, quantum reconstruction, and treasury rails.
             </p>
             <div className="cta-row">
-              <Link href="/world" className="btn-outline">
-                World
+              <Link href="/what-it-is" className="btn-outline">
+                What It Is
               </Link>
-              <Link href="/substrates" className="btn-outline">
-                Substrates
+              <Link href="/what-it-does" className="btn-outline">
+                What It Does
               </Link>
             </div>
           </div>
@@ -106,13 +106,15 @@ export default function Home() {
         >
           Nine substrates. One causal graph. Live on Solana.
         </p>
-        <Link
-          href="/build"
+        <a
+          href="https://zwn-liart.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
           className="font-mono font-bold"
           style={{ fontSize: 22, color: '#1A1A2E' }}
         >
           Access the ZWM →
-        </Link>
+        </a>
       </section>
 
       <footer
