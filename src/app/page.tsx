@@ -1,7 +1,4 @@
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
-
-const WorldCanvas = dynamic(() => import('@/components/WorldCanvas'), { ssr: false });
 
 const PROGRAM = 'H1eSx6ij1Q296Tzss62AHuamn1rD4a9MkDapYu1CyvVM';
 
@@ -88,10 +85,6 @@ export default function Home() {
           Energy → Computation → Knowledge → Energy
         </p>
       </section>
-
-      <div style={{ height: '60vh', width: '100%' }}>
-        <WorldCanvas />
-      </div>
 
       <section className="page-shell border-t" style={{ borderColor: 'var(--line)' }}>
         <p
