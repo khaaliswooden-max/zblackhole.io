@@ -20,7 +20,6 @@ async function fetchUsdcBalance(rpcUrl: string, mint: string): Promise<number> {
         { encoding: 'jsonParsed' },
       ],
     }),
-    next: { revalidate: 60 },
   });
 
   if (!res.ok) return 0;
@@ -28,7 +27,7 @@ async function fetchUsdcBalance(rpcUrl: string, mint: string): Promise<number> {
   const data = await res.json();
   const accounts: unknown[] = data?.result?.value ?? [];
 
-  return accounts.reduce((sum, acc) => {
+  return accounts.reduce<number>((sum, acc) => {
     const ui = (acc as { account: { data: { parsed: { info: { tokenAmount: { uiAmount: number } } } } } })
       ?.account?.data?.parsed?.info?.tokenAmount?.uiAmount ?? 0;
     return sum + Number(ui);
