@@ -34,6 +34,12 @@ interface ZLink {
   rel: RelType;
 }
 
+interface WorldGraph {
+  nodes: ZNode[];
+  links: ZLink[];
+  fetchedAt: string;
+}
+
 // ── Colour palette (from CLAUDE.md design tokens) ────────────────────────────
 
 const NODE_COLOR: Record<NodeType, string> = {
@@ -72,48 +78,6 @@ const LINK_WIDTH: Record<RelType, number> = {
   EMITTED: 1,
 };
 
-// ── Mock graph data ───────────────────────────────────────────────────────────
-
-const RAW_NODES: ZNode[] = [
-  { id: 'actor-001', label: 'actor-001', type: 'WorldActor', substrate: 'world' },
-  { id: 'actor-002', label: 'actor-002', type: 'WorldActor', substrate: 'world' },
-  { id: 'actor-003', label: 'actor-003', type: 'WorldActor', substrate: 'world' },
-  { id: 'comp-001', label: 'comp-001', type: 'ComplianceState', substrate: 'civium', timestamp: '2026-04-06T10:01:00Z', score: 88 },
-  { id: 'comp-002', label: 'comp-002', type: 'ComplianceState', substrate: 'civium', timestamp: '2026-04-06T09:44:00Z', score: 71 },
-  { id: 'proc-001', label: 'proc-001', type: 'ProcurementState', substrate: 'aureon', timestamp: '2026-04-06T10:02:00Z', fitiq: 84 },
-  { id: 'proc-002', label: 'proc-002', type: 'ProcurementState', substrate: 'aureon', timestamp: '2026-04-06T09:51:00Z', fitiq: 46 },
-  { id: 'hist-001', label: 'hist-001', type: 'HistoricalRecon', substrate: 'qal', timestamp: '2026-04-06T09:55:00Z', confidence: 0.82 },
-  { id: 'hist-002', label: 'hist-002', type: 'HistoricalRecon', substrate: 'qal', timestamp: '2026-04-06T09:33:00Z', confidence: 0.61 },
-  { id: 'bio-001', label: 'bio-001', type: 'BiologicalState', substrate: 'symbion', timestamp: '2026-04-06T10:03:00Z', anomaly: true },
-  { id: 'mig-001', label: 'mig-001', type: 'MigrationState', substrate: 'relian', timestamp: '2026-04-06T09:48:00Z', preservation: 0.97 },
-  { id: 'compute-001', label: 'compute-001', type: 'ComputeState', substrate: 'podx', timestamp: '2026-04-06T10:04:00Z', availability: 0.99 },
-  { id: 'event-001', label: 'event-001', type: 'SubstrateEvent', substrate: 'civium', timestamp: '2026-04-06T09:44:00Z' },
-  { id: 'event-002', label: 'event-002', type: 'SubstrateEvent', substrate: 'aureon', timestamp: '2026-04-06T09:51:00Z' },
-  { id: 'event-003', label: 'event-003', type: 'SubstrateEvent', substrate: 'symbion', timestamp: '2026-04-06T10:03:00Z' },
-  { id: 'event-004', label: 'event-004', type: 'SubstrateEvent', substrate: 'qal', timestamp: '2026-04-06T09:55:00Z' },
-];
-
-const RAW_LINKS: ZLink[] = [
-  { source: 'actor-001', target: 'comp-001', rel: 'HAS_STATE' },
-  { source: 'actor-001', target: 'proc-001', rel: 'HAS_STATE' },
-  { source: 'actor-001', target: 'mig-001',  rel: 'HAS_STATE' },
-  { source: 'actor-002', target: 'comp-002',    rel: 'HAS_STATE' },
-  { source: 'actor-002', target: 'hist-001',    rel: 'HAS_STATE' },
-  { source: 'actor-002', target: 'compute-001', rel: 'HAS_STATE' },
-  { source: 'actor-003', target: 'bio-001',  rel: 'HAS_STATE' },
-  { source: 'actor-003', target: 'hist-002', rel: 'HAS_STATE' },
-  { source: 'actor-003', target: 'proc-002', rel: 'HAS_STATE' },
-  { source: 'comp-001', target: 'comp-002', rel: 'SUPERSEDES' },
-  { source: 'proc-001', target: 'proc-002', rel: 'SUPERSEDES' },
-  { source: 'hist-001', target: 'hist-002', rel: 'SUPERSEDES' },
-  { source: 'comp-002', target: 'event-001', rel: 'CAUSED_BY' },
-  { source: 'proc-002', target: 'event-002', rel: 'CAUSED_BY' },
-  { source: 'bio-001',  target: 'event-003', rel: 'CAUSED_BY' },
-  { source: 'hist-001', target: 'event-004', rel: 'CAUSED_BY' },
-  { source: 'comp-002', target: 'event-001', rel: 'EMITTED' },
-  { source: 'proc-002', target: 'event-002', rel: 'EMITTED' },
-];
-
 // ── Legend entries ────────────────────────────────────────────────────────────
 
 const LEGEND = [
@@ -142,6 +106,8 @@ export default function WorldCanvas() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [dims, setDims] = useState({ w: 800, h: 600 });
   const [selected, setSelected] = useState<ZNode | null>(null);
+  const [graph, setGraph] = useState<WorldGraph | null>(null);
+  const [fetchedAt, setFetchedAt] = useState<string | null>(null);
 
   // Resize observer
   useEffect(() => {
@@ -153,6 +119,29 @@ export default function WorldCanvas() {
     ro.observe(el);
     setDims({ w: el.clientWidth, h: el.clientHeight });
     return () => ro.disconnect();
+  }, []);
+
+  // Live data fetch — polls every 30 s
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      try {
+        const res = await fetch('/api/world');
+        if (!res.ok) return;
+        const data: WorldGraph = await res.json();
+        if (!cancelled) {
+          setGraph(data);
+          setFetchedAt(data.fetchedAt);
+        }
+      } catch {
+        // keep previous data on transient network errors
+      }
+    }
+
+    load();
+    const id = setInterval(load, 30_000);
+    return () => { cancelled = true; clearInterval(id); };
   }, []);
 
   // Custom node renderer
@@ -232,38 +221,59 @@ export default function WorldCanvas() {
         fontFamily: '"IBM Plex Mono", monospace',
       }}
     >
+      {/* Loading skeleton */}
+      {!graph && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#444440',
+            fontSize: 11,
+            letterSpacing: '0.06em',
+            textTransform: 'uppercase',
+          }}
+        >
+          Loading world graph…
+        </div>
+      )}
+
       {/* Graph */}
-      <ForceGraph2D
-        width={graphWidth}
-        height={dims.h}
-        graphData={{ nodes: RAW_NODES as never[], links: RAW_LINKS as never[] }}
-        backgroundColor="#0a0a0a"
-        nodeCanvasObject={nodeCanvasObject}
-        nodeCanvasObjectMode={() => 'replace'}
-        nodeLabel={() => ''}
-        linkColor={linkColor}
-        linkWidth={linkWidth}
-        linkDirectionalArrowLength={(link: unknown) => {
-          const l = link as ZLink;
-          return l.rel === 'CAUSED_BY' ? 5 : 0;
-        }}
-        linkDirectionalArrowRelPos={1}
-        linkDirectionalParticles={linkDirectionalParticles}
-        linkDirectionalParticleColor={linkDirectionalParticleColor}
-        linkDirectionalParticleWidth={linkDirectionalParticleWidth}
-        linkDirectionalParticleSpeed={linkDirectionalParticleSpeed}
-        onNodeClick={onNodeClick}
-        nodePointerAreaPaint={(node: unknown, color: string, ctx: CanvasRenderingContext2D) => {
-          const n = node as ZNode & { x: number; y: number };
-          ctx.fillStyle = color;
-          ctx.beginPath();
-          ctx.arc(n.x, n.y, (NODE_RADIUS[n.type] ?? 6) + 4, 0, 2 * Math.PI);
-          ctx.fill();
-        }}
-        cooldownTicks={120}
-        d3AlphaDecay={0.02}
-        d3VelocityDecay={0.3}
-      />
+      {graph && (
+        <ForceGraph2D
+          width={graphWidth}
+          height={dims.h}
+          graphData={{ nodes: graph.nodes as never[], links: graph.links as never[] }}
+          backgroundColor="#0a0a0a"
+          nodeCanvasObject={nodeCanvasObject}
+          nodeCanvasObjectMode={() => 'replace'}
+          nodeLabel={() => ''}
+          linkColor={linkColor}
+          linkWidth={linkWidth}
+          linkDirectionalArrowLength={(link: unknown) => {
+            const l = link as ZLink;
+            return l.rel === 'CAUSED_BY' ? 5 : 0;
+          }}
+          linkDirectionalArrowRelPos={1}
+          linkDirectionalParticles={linkDirectionalParticles}
+          linkDirectionalParticleColor={linkDirectionalParticleColor}
+          linkDirectionalParticleWidth={linkDirectionalParticleWidth}
+          linkDirectionalParticleSpeed={linkDirectionalParticleSpeed}
+          onNodeClick={onNodeClick}
+          nodePointerAreaPaint={(node: unknown, color: string, ctx: CanvasRenderingContext2D) => {
+            const n = node as ZNode & { x: number; y: number };
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, (NODE_RADIUS[n.type] ?? 6) + 4, 0, 2 * Math.PI);
+            ctx.fill();
+          }}
+          cooldownTicks={120}
+          d3AlphaDecay={0.02}
+          d3VelocityDecay={0.3}
+        />
+      )}
 
       {/* Legend */}
       <div
@@ -384,6 +394,11 @@ export default function WorldCanvas() {
         <span style={{ fontSize: 10, color: '#444440' }}>
           Force-directed graph of WorldActors, substrate state snapshots, and causal SubstrateEvents.
         </span>
+        {fetchedAt && (
+          <span style={{ fontSize: 9, color: '#333330' }}>
+            Updated {new Date(fetchedAt).toLocaleTimeString()}
+          </span>
+        )}
       </div>
     </div>
   );

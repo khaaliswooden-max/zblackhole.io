@@ -14,10 +14,21 @@ const ALLOCATION = [
 
 const TARGET = 2_000_000;
 
-export default function SeedPage() {
-  const raised = 0;
-  const investors = 0;
-  const progressPercent = (raised / TARGET) * 100;
+async function getSeedStats(): Promise<{ raised: number; investors: number }> {
+  try {
+    // Use NEXT_PUBLIC_BASE_URL in production; fall back to localhost for dev
+    const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000';
+    const res = await fetch(`${base}/api/seed`, { next: { revalidate: 60 } });
+    if (!res.ok) return { raised: 0, investors: 0 };
+    return res.json();
+  } catch {
+    return { raised: 0, investors: 0 };
+  }
+}
+
+export default async function SeedPage() {
+  const { raised, investors } = await getSeedStats();
+  const progressPercent = Math.min((raised / TARGET) * 100, 100);
 
   return (
     <main className="page-shell">
