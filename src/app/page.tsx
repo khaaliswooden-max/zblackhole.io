@@ -1,7 +1,9 @@
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
-
-const WorldCanvas = dynamic(() => import('@/components/WorldCanvas'), { ssr: false });
+import {
+  PLATFORMS,
+  statusClass,
+  statusLabel,
+} from '@/lib/platforms';
 
 const PROGRAM = 'H1eSx6ij1Q296Tzss62AHuamn1rD4a9MkDapYu1CyvVM';
 
@@ -89,30 +91,36 @@ export default function Home() {
         </p>
       </section>
 
-      <div style={{ height: '60vh', width: '100%' }}>
-        <WorldCanvas />
-      </div>
-
       <section className="page-shell border-t" style={{ borderColor: 'var(--line)' }}>
-        <p
-          className="mb-3 font-sans font-bold"
-          style={{ fontSize: 28, color: 'var(--fg)' }}
+        <div
+          className="grid gap-px max-[900px]:grid-cols-1"
+          style={{
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            background: 'var(--line)',
+            border: '1px solid var(--line)',
+          }}
         >
-          The institutional world model.
-        </p>
-        <p
-          className="mb-3 font-mono"
-          style={{ fontSize: 22, color: '#888880' }}
-        >
-          Nine substrates. One causal graph. Live on Solana.
-        </p>
-        <Link
-          href="/build"
-          className="font-mono font-bold"
-          style={{ fontSize: 22, color: '#1A1A2E' }}
-        >
-          Access the ZWM →
-        </Link>
+          {PLATFORMS.map((p) => (
+            <div
+              key={p.id}
+              className="p-6"
+              style={{ background: 'var(--bg)' }}
+            >
+              <div className="mb-3 font-mono text-[11px]" style={{ color: 'var(--fg-muted)' }}>
+                {p.id}
+              </div>
+              <div className="mono-14 mb-1">{p.name}</div>
+              <p className="body-small mb-4 min-h-[2.75rem]">{p.domain}</p>
+              <p className="body-small mb-1" style={{ color: 'var(--fg-dim)' }}>
+                {p.gridSummary[0]}
+              </p>
+              <p className="body-small mb-4" style={{ color: 'var(--fg-dim)' }}>
+                {p.gridSummary[1]}
+              </p>
+              <span className={statusClass(p.status)}>{statusLabel(p.status)}</span>
+            </div>
+          ))}
+        </div>
       </section>
 
       <footer
