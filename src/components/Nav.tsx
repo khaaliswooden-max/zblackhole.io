@@ -4,11 +4,17 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useChainSlot } from './ChainSlotContext';
 
-const LINKS = [
-  { href: '/world', label: 'World' },
-  { href: '/substrates', label: 'Substrates' },
-  { href: '/research', label: 'Research' },
-  { href: '/build', label: 'Build' },
+type NavLink = {
+  href: string;
+  label: string;
+  external?: boolean;
+};
+
+const LINKS: NavLink[] = [
+  { href: '/what-it-is', label: 'What It Is' },
+  { href: '/what-it-does', label: 'What It Does' },
+  { href: '/research', label: 'The Research' },
+  { href: 'https://zwn-liart.vercel.app/', label: 'ZWM →', external: true },
 ];
 
 function formatSlot(n: number) {
@@ -43,10 +49,28 @@ export default function Nav() {
         </Link>
         <div className="flex min-w-0 flex-1 justify-center overflow-x-auto [-webkit-overflow-scrolling:touch]">
           <div className="flex items-center gap-5 px-2 max-[900px]:gap-3">
-            {LINKS.map(({ href, label }) => {
+            {LINKS.map(({ href, label, external }) => {
               const active =
-                pathname === href ||
-                (href !== '/' && pathname.startsWith(href));
+                !external &&
+                (pathname === href ||
+                  (href !== '/' && pathname.startsWith(href)));
+              if (external) {
+                return (
+                  <a
+                    key={href}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="shrink-0 text-[12px] transition-colors duration-150 max-[900px]:text-[11px]"
+                    style={{
+                      color: 'var(--fg-muted)',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    {label}
+                  </a>
+                );
+              }
               return (
                 <Link
                   key={href}
