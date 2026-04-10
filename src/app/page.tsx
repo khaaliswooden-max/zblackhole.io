@@ -100,7 +100,7 @@ export default function Home() {
           Nine substrates. One causal graph. Live on Solana.
         </p>
         <a
-          href="https://zwn-liart.vercel.app/"
+          href="https://zworldmodel.xyz/"
           target="_blank"
           rel="noopener noreferrer"
           className="font-mono font-bold"

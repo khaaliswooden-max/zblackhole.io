@@ -184,7 +184,7 @@ export default function WhatItIsPage() {
         </p>
         <div className="cta-row">
           <a
-            href="https://zwn-liart.vercel.app/"
+            href="https://zworldmodel.xyz/"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-outline"

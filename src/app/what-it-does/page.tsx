@@ -185,7 +185,7 @@ export default function WhatItDoesPage() {
             The Research
           </a>
           <a
-            href="https://zwn-liart.vercel.app/"
+            href="https://zworldmodel.xyz/"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-outline"

@@ -14,7 +14,7 @@ const LINKS: NavLink[] = [
   { href: '/what-it-is', label: 'What It Is' },
   { href: '/what-it-does', label: 'What It Does' },
   { href: '/research', label: 'The Research' },
-  { href: 'https://zwn-liart.vercel.app/', label: 'ZWM →', external: true },
+  { href: 'https://zworldmodel.xyz/', label: 'ZWM →', external: true },
 ];
 
 function formatSlot(n: number) {
